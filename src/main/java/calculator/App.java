@@ -5,18 +5,20 @@ import java.util.Scanner;
 public class App {
 
     public static void main(String[] args) {
-
-        Scanner sc = new Scanner(System.in);
+        int[] resultArr = new int[10];
+        int count = 0;
         String flagStr; // 실행 여부 받아올 변수
         boolean flag = true; // 실행 여부 및 오류 여부를 판단하는 변수
         boolean errFlag;
+
+        Scanner sc = new Scanner(System.in);
 
         while (true) {
             if (!flag) {
                 System.out.println("시스템이 종료됩니다.");
                 System.exit(0);
             } else {
-                errFlag = true; // errFlag 초기화
+                errFlag = false; // errFlag 초기화
                 System.out.print("첫 번째 숫자를 입력해주세요! : ");
                 int firstNum = sc.nextInt();
 
@@ -40,18 +42,23 @@ public class App {
                     case '/' :
                         if (secondNum == 0) {
                             System.out.println("나눗셈에서 분모로 0을 사용할 수 없습니다.");
-                            errFlag = false;
+                            errFlag = true;
                         } else {
                             result = firstNum / secondNum;
                         }
                         break;
                     default:
                         System.out.println("잘못된 연산 기호를 입력하셨습니다. +, -, *, / 중 하나를 입력해주세요!");
-                        errFlag = false;
+                        errFlag = true;
                 }
 
-                if (errFlag) {
+                if (!errFlag) {
                     System.out.println("결과 : " + result);
+                    if (count < 10) {
+                        resultArr[count] = result;
+                        System.out.println("resultArr[" + count + "] = " + result);
+                        count++;
+                    }
                 }
 
                 System.out.print("더 계산하시겠습니까? (exit 입력 시 종료) : ");
@@ -59,6 +66,7 @@ public class App {
                 if (flagStr.equals("exit")) {
                     flag = false;
                 }
+                System.out.println("==================");
             }
         }
     }
