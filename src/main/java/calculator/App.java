@@ -21,7 +21,7 @@ public class App {
         char operator = sc.next().charAt(0);
 
         int result = 0;
-        boolean state = true;
+
         switch (operator) {
             case '+' :
                 result = firstNum + secondNum; break;
@@ -32,20 +32,17 @@ public class App {
             case '/' :
                 if (secondNum == 0) {
                     System.out.println("나눗셈에서 분모로 0을 사용할 수 없습니다.");
-                    state = false;
+                    System.exit(0);
                 } else {
                     result = firstNum / secondNum;
                 }
                 break;
             default:
                 System.out.println("잘못된 연산 기호를 입력하셨습니다. +, -, *, / 중 하나를 입력해주세요!");
-                state = false;
-                break;
+                System.exit(0);
         }
-        if (state == true) {
-            System.out.println("결과 : " + result);
-        } else {
-            System.out.println("입력 오류로 프로그램이 종료됩니다.");
-        }
+
+        System.out.println("결과 : " + result);
+
     }
 }
