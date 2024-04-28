@@ -54,12 +54,16 @@ public class App {
 
                 if (!errFlag) {
                     System.out.println("결과 : " + result);
-                    if (count < 10) {
+                    if (count >= 10) {
+                        for (int i = 0; i < 9; i++) {
+                            resultArr[i] = resultArr[i+1];
+                        }
+                        count = 9;
+                    }
                         resultArr[count] = result;
-                        System.out.println("resultArr[" + count + "] = " + result);
+                        System.out.println("resultArr["+ count +"] = " + result);
                         count++;
                     }
-                }
 
                 System.out.print("더 계산하시겠습니까? (exit 입력 시 종료) : ");
                 flagStr = sc.next();
@@ -71,3 +75,4 @@ public class App {
         }
     }
 }
+
