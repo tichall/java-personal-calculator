@@ -62,7 +62,7 @@ public class App {
 
                 System.out.println("==================");
 
-                // 결과값 리스트에 값이 존재할 때만 삭제 메시지 표시
+                // 결과값 리스트에 값이 존재할 때만 삭제, 조회 메시지 표시
                 if (!resultArr.isEmpty()) {
                     System.out.print("첫 번째로 저장된 결과값을 삭제하시겠습니까? (remove 입력 시 삭제) : ");
                     String selectRemove = sc.next();
@@ -71,6 +71,17 @@ public class App {
                         resultArr.remove(0);
                         System.out.println("결과값 " + removeNum + " 삭제 완료! (남은 결과값 개수 " + resultArr.size() + "개)");
                     }
+
+                    System.out.println("==================");
+                    System.out.print("저장된 결과값을 조회하시겠습니까? (inquiry 입력 시 조회) : ");
+                    String selectView = sc.next();
+                    if (selectView.equals("inquiry")) {
+                        for (int i : resultArr) {
+                            System.out.println(i);
+                        }
+                        System.out.println("[ 총 결과값 개수 : " + resultArr.size() + " ]");
+                    }
+
                 } else {
                     System.out.println("저장된 결과값이 없습니다.");
                 }
