@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Calculator {
-    private List<Integer> resultArr = new ArrayList<>();
+    private List<Integer> resultArr;
     int result = 0;
+
+    public Calculator(List<Integer> resultArr) {
+        this.resultArr =  resultArr;
+    }
     public int calculate(int firstNum, int secondNum, char operator) throws Exception {
 
         switch (operator) {

@@ -8,7 +8,7 @@ public class App {
         boolean flag = true; // 실행 여부를 판단하는 변수
         boolean errFlag; // 오류 여부 판단하는 변수
 
-        Calculator cal = new Calculator();
+        Calculator cal = new Calculator(new ArrayList<>());
         int result = 0;
 
         Scanner sc = new Scanner(System.in);
