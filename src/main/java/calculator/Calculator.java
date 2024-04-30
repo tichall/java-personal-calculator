@@ -1,15 +1,13 @@
 package calculator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Calculator {
-    ArrayList<Integer> resultArr = new ArrayList<>();
+    private List<Integer> resultArr = new ArrayList<>();
     int result = 0;
-
     public int calculate(int firstNum, int secondNum, char operator) throws Exception {
-//        if (firstNum < 0 || secondNum < 0) {
-//            throw new NumberException("음수는 사용할 수 없습니다.");
-//        }
+
         switch (operator) {
             case '+' : this.result = firstNum + secondNum; break;
             case '-' : this.result = firstNum - secondNum; break;
@@ -25,5 +23,26 @@ public class Calculator {
                 throw new OperationException(operator);
         }
         return this.result;
+    }
+    public List<Integer> getResultArr () {
+        return this.resultArr;
+    }
+    public int getResultArrSize() {
+        return this.resultArr.size();
+    }
+
+    public void setResultArr(int result) {
+            this.resultArr.add(result);
+    }
+
+    public void removeResult() {
+        this.resultArr.remove(0);
+    }
+
+    public void inquiryResults() {
+        for (Integer i : this.resultArr) {
+            System.out.println(i);
+        }
+        System.out.println("[ 총 결과값 개수 : " + getResultArrSize() + " ]");
     }
 }
