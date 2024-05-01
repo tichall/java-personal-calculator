@@ -3,18 +3,16 @@ package calculator;
 import java.util.List;
 
 public class ArithmeticCalculator extends Calculator{
-    AddOperator add;
-    SubtractOperator subtract;
-    MultiplyOperator multiply;
-    DivideOperator divide;
+    Operator add, subtract, multiply, divide, mod;
 
-    public ArithmeticCalculator(List<Double> arithResultArr, AddOperator add, SubtractOperator subtract, MultiplyOperator multiply, DivideOperator divide) {
+    public ArithmeticCalculator(List<Double> arithResultArr, AddOperator add, SubtractOperator subtract, MultiplyOperator multiply, DivideOperator divide, ModOperator mod) {
         // 부모 생성자 호출
         super(arithResultArr);
         this.add = add;
         this.subtract = subtract;
         this.multiply = multiply;
         this.divide = divide;
+        this.mod = mod;
     }
 
     @Override
@@ -31,6 +29,7 @@ public class ArithmeticCalculator extends Calculator{
             case '-' : super.result = subtract.operate(firstNum, secondNum); break;
             case '*' : super.result = multiply.operate(firstNum, secondNum); break;
             case '/' : super.result = divide.operate(firstNum, secondNum); break;
+            case '%' : super.result = mod.operate(firstNum, secondNum); break;
             default :
                 // 잘못된 연산자 예외 처리
                 throw new OperationException(operator);

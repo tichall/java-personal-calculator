@@ -8,7 +8,7 @@ public class App {
         boolean flag = true; // 실행 여부를 판단하는 변수
         final String intTypeErrMsg = "[피연산자 에러 발생] 숫자(정수)를 입력해주세요.";
         final String numberRangeErrMsg = "양의 정수만 계산 가능합니다!";
-        Calculator arithCal = new ArithmeticCalculator(new ArrayList<>(), new AddOperator(), new SubtractOperator(), new MultiplyOperator(), new DivideOperator());
+        Calculator arithCal = new ArithmeticCalculator(new ArrayList<>(), new AddOperator(), new SubtractOperator(), new MultiplyOperator(), new DivideOperator(), new ModOperator());
         Calculator circleCal = new CircleCalculator(new ArrayList<>());
 
         double result;
@@ -83,7 +83,7 @@ public class App {
                             break;
                         }
 
-                        System.out.print("사칙연산 기호를 입력해주세요! (+, -, *, /): ");
+                        System.out.print("사칙연산 기호를 입력해주세요! (+, -, *, /, %): ");
 
                         char operator = sc.next().charAt(0);
                         try {
