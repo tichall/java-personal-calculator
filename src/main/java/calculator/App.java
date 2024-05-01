@@ -1,15 +1,15 @@
 package calculator;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class App {
     public static void main(String[] args) {
 
         String flagStr; // 실행 여부 메시지
         boolean flag = true; // 실행 여부를 판단하는 변수
-        boolean errFlag; // 오류 여부 판단하는 변수
-
-        Calculator arithCal = new Calculator(new ArrayList<>());
-        Calculator circleCal = new Calculator(new ArrayList<>(), "circle");
+        final String intTypeErrMsg = "[피연산자 에러 발생] 숫자(정수)를 입력해주세요.";
+        final String numberRangeErrMsg = "양의 정수만 계산 가능합니다!";
+        Calculator cal = new Calculator(new ArrayList<>(), new ArrayList<>());
 
         double result = 0;
 
@@ -26,61 +26,89 @@ public class App {
                 switch (option) {
                     // 원의 넓이 계산기 선택 시
                     case "1" :
+                        int radius = 0;
                         System.out.print("원의 반지름을 입력해주세요! : ");
-                        int radius = sc.nextInt();
-                        if (radius < 0) {
-                            System.out.println("양의 정수만 계산 가능합니다.");
-                        } else {
-                            result = circleCal.calculateCircleArea(radius);
-                            circleCal.setCircleResultArr(result);
-                            System.out.println("원의 넓이 : " + result + " (저장 완료!)");
-
-                            System.out.println("==================");
-                            circleCal.inquiryCircleResults();
+                        // 반지름 값에 음수 또는 int 타입이 아닌 값이 들어온 경우 예외 처리
+                        try {
+                            radius = sc.nextInt();
+                            if (radius < 0) {
+                                throw new NumberException(numberRangeErrMsg);
+                            }
+                        } catch (InputMismatchException e) {
+                            System.out.println(intTypeErrMsg);
+                            break;
+                        } catch (NumberException e) {
+                            System.out.println(e.getMessage());
+                            break;
                         }
+
+                        result = cal.calculateCircleArea(radius);
+                        cal.setCircleResultArr(result);
+                        System.out.println("원의 넓이 : " + result + " (저장 완료!)");
+
+                        System.out.println("==================");
+                        cal.inquiryCircleResults();
+
                         break;
 
                     // 사칙연산 계산기 선택 시
                     case "2" :
-                        errFlag = false; // errFlag 초기화
+                        int firstNum, secondNum;
                         System.out.print("첫 번째 숫자를 입력해주세요! : ");
-                        int firstNum = sc.nextInt();
+                        // 숫자에 음수 또는 int 타입이 아닌 값이 들어온 경우 예외 처리
+                        try {
+                            firstNum = sc.nextInt();
+                            if (firstNum < 0) {
+                                throw new NumberException(numberRangeErrMsg);
+                            }
+                        } catch (InputMismatchException e) {
+                            System.out.println(intTypeErrMsg);
+                            break;
+                        } catch (NumberException e) {
+                            System.out.println(e.getMessage());
+                            break;
+                        }
 
                         System.out.print("두 번째 숫자를 입력해주세요! : ");
-                        int secondNum = sc.nextInt();
-
-                        // 양의 정수만 입력 가능
-                        if (firstNum < 0 || secondNum < 0) {
-                            System.out.println("양의 정수만 계산 가능합니다!");
-                            errFlag = true;
-                        } else {
-                            System.out.print("사칙연산 기호를 입력해주세요! (+, -, *, /): ");
-
-                            char operator = sc.next().charAt(0);
-                            try {
-                                result = arithCal.calculate(firstNum, secondNum, operator);
-                            } catch (Exception e) {
-                                System.out.println(e.getMessage());
-                                errFlag = true;
+                        try {
+                            secondNum = sc.nextInt();
+                            if (secondNum < 0) {
+                                throw new NumberException(numberRangeErrMsg);
                             }
+                        } catch (InputMismatchException e) {
+                            System.out.println(intTypeErrMsg);
+                            break;
+                        } catch (NumberException e) {
+                            System.out.println(e.getMessage());
+                            break;
                         }
 
-                        // 계산 중 오류가 없는 경우만 결과 출력 및 결과값 저장
-                        if (!errFlag) {
-                            arithCal.setArithResultArr((int) result);
-                            System.out.println("결과 : " + (int) result + " (저장 완료!)");
+                        System.out.print("사칙연산 기호를 입력해주세요! (+, -, *, /): ");
+
+                        char operator = sc.next().charAt(0);
+                        try {
+                            result = cal.calculate(firstNum, secondNum, operator);
+                        } catch (Exception e) {
+                        // calculate에서 발생하는 예외의 종류가 여러가지이므로 특정 exception명이 아닌 Exception 사용
+                            System.out.println(e.getMessage());
+                            break;
                         }
+
+                        // 이미 이전에 오류가 발생하면 해당 switch문을 빠져나가기 때문에 결과값 저장 구문은 만날 수 없다. 따라서 이전에 사용했던 errFlag 변수는 삭제했다.
+                        cal.setArithResultArr((int) result);
+                        System.out.println("결과 : " + (int) result + " (저장 완료!)");
 
                         System.out.println("==================");
 
                         // 결과값 리스트에 값이 존재할 때만 삭제, 조회 메시지 표시
-                        if (!arithCal.getArithResultArr().isEmpty()) {
+                        if (!cal.getArithResultArr().isEmpty()) {
                             System.out.print("첫 번째로 저장된 결과값을 삭제하시겠습니까? (remove 입력 시 삭제) : ");
                             String selectRemove = sc.next();
+                            // 삭제 진행
                             if (selectRemove.equals("remove")) {
                                 //int removeNum = cal.resultArr.get(0);
 
-                                arithCal.removeResult();
+                                cal.removeResult();
                                 System.out.println("삭제 완료!");
                                 //System.out.println("결과값 " + removeNum + " 삭제 완료! (남은 결과값 개수 " + cal.getResultArrSize() + "개)");
                             }
@@ -88,9 +116,10 @@ public class App {
                             System.out.println("==================");
                             System.out.print("저장된 결과값을 조회하시겠습니까? (inquiry 입력 시 조회) : ");
                             String selectView = sc.next();
+                            // 조회 진행
                             if (selectView.equals("inquiry")) {
                                 System.out.println("==================");
-                                arithCal.inquiryResults();
+                                cal.inquiryResults();
                             }
 
                         } else {
@@ -102,9 +131,11 @@ public class App {
                         System.out.println("잘못된 옵션을 선택하셨습니다. 1 또는 2를 입력해주세요!");
                         break;
                 }
+                // 계산 중간에 예외 발생하면 이 구문으로 바로 이동
                 System.out.println("==================");
 
                 System.out.print("더 계산하시겠습니까? (exit 입력 시 종료) : ");
+                sc.nextLine(); // 에러 발생한 경우 버퍼에 남아있는 값 비워주기
                 flagStr = sc.next();
                 if (flagStr.equals("exit")) {
                     flag = false;
