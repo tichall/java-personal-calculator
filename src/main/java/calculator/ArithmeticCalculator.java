@@ -3,9 +3,18 @@ package calculator;
 import java.util.List;
 
 public class ArithmeticCalculator extends Calculator{
+    AddOperator add;
+    SubtractOperator subtract;
+    MultiplyOperator multiply;
+    DivideOperator divide;
 
-    public ArithmeticCalculator(List<Double> arithResultArr) {
+    public ArithmeticCalculator(List<Double> arithResultArr, AddOperator add, SubtractOperator subtract, MultiplyOperator multiply, DivideOperator divide) {
+        // 부모 생성자 호출
         super(arithResultArr);
+        this.add = add;
+        this.subtract = subtract;
+        this.multiply = multiply;
+        this.divide = divide;
     }
 
     @Override
@@ -18,15 +27,10 @@ public class ArithmeticCalculator extends Calculator{
     public double calculate(int firstNum, int secondNum, char operator) throws Exception {
 
         switch (operator) {
-            case '+' : super.result = firstNum + secondNum; break;
-            case '-' : super.result = firstNum - secondNum; break;
-            case '*' : super.result = firstNum * secondNum; break;
-            case '/' :
-                // 분모 0인 경우 예외 처리
-                if (secondNum == 0) {
-                    throw new NumberException("나눗셈에서 분모로 0을 사용할 수 없습니다.");
-                }
-                super.result = firstNum / secondNum; break;
+            case '+' : super.result = add.operate(firstNum, secondNum); break;
+            case '-' : super.result = subtract.operate(firstNum, secondNum); break;
+            case '*' : super.result = multiply.operate(firstNum, secondNum); break;
+            case '/' : super.result = divide.operate(firstNum, secondNum); break;
             default :
                 // 잘못된 연산자 예외 처리
                 throw new OperationException(operator);

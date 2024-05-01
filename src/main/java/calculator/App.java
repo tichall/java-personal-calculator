@@ -8,7 +8,7 @@ public class App {
         boolean flag = true; // 실행 여부를 판단하는 변수
         final String intTypeErrMsg = "[피연산자 에러 발생] 숫자(정수)를 입력해주세요.";
         final String numberRangeErrMsg = "양의 정수만 계산 가능합니다!";
-        Calculator arithCal = new ArithmeticCalculator(new ArrayList<>());
+        Calculator arithCal = new ArithmeticCalculator(new ArrayList<>(), new AddOperator(), new SubtractOperator(), new MultiplyOperator(), new DivideOperator());
         Calculator circleCal = new CircleCalculator(new ArrayList<>());
 
         double result;
@@ -43,7 +43,7 @@ public class App {
                         }
 
                         result = circleCal.calculate(radius);
-                        circleCal.setResultArr(result);
+                        circleCal.setResultArr(result); // 결과값 리스트에 추가
                         System.out.println("원의 넓이 : " + result + " (저장 완료!)");
 
                         System.out.println("==================");
@@ -106,11 +106,12 @@ public class App {
                             String selectRemove = sc.next();
                             // 삭제 진행
                             if (selectRemove.equals("remove")) {
-                                //int removeNum = cal.resultArr.get(0);
+                                // resultArr 이 private 아닐 때 사용하던 값인데, 이제 어떻게 받아와야 할 지 모르겠음. get(0) 만을 위한 getter를 추가해야 하는 건지..
+                                // int removeNum = cal.resultArr.get(0);
 
                                 arithCal.removeResult();
                                 System.out.println("삭제 완료!");
-                                //System.out.println("결과값 " + removeNum + " 삭제 완료! (남은 결과값 개수 " + cal.getResultArrSize() + "개)");
+                                // System.out.println("결과값 " + removeNum + " 삭제 완료! (남은 결과값 개수 " + cal.getResultArrSize() + "개)");
                             }
 
                             System.out.println("==================");
