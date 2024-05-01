@@ -9,7 +9,8 @@ public class App {
         boolean flag = true; // 실행 여부를 판단하는 변수
         final String intTypeErrMsg = "[피연산자 에러 발생] 숫자(정수)를 입력해주세요.";
         final String numberRangeErrMsg = "양의 정수만 계산 가능합니다!";
-        Calculator cal = new Calculator(new ArrayList<>(), new ArrayList<>());
+        Calculator arithCal = new ArithmeticCalculator(new ArrayList<>());
+        Calculator circleCal = new CircleCalculator(new ArrayList<>());
 
         double result = 0;
 
@@ -42,12 +43,12 @@ public class App {
                             break;
                         }
 
-                        result = cal.calculateCircleArea(radius);
-                        cal.setCircleResultArr(result);
+                        result = circleCal.calculate(radius);
+                        circleCal.setResultArr(result);
                         System.out.println("원의 넓이 : " + result + " (저장 완료!)");
 
                         System.out.println("==================");
-                        cal.inquiryCircleResults();
+                        circleCal.inquiryResults();
 
                         break;
 
@@ -87,7 +88,7 @@ public class App {
 
                         char operator = sc.next().charAt(0);
                         try {
-                            result = cal.calculate(firstNum, secondNum, operator);
+                            result = arithCal.calculate(firstNum, secondNum, operator);
                         } catch (Exception e) {
                         // calculate에서 발생하는 예외의 종류가 여러가지이므로 특정 exception명이 아닌 Exception 사용
                             System.out.println(e.getMessage());
@@ -95,20 +96,20 @@ public class App {
                         }
 
                         // 이미 이전에 오류가 발생하면 해당 switch문을 빠져나가기 때문에 결과값 저장 구문은 만날 수 없다. 따라서 이전에 사용했던 errFlag 변수는 삭제했다.
-                        cal.setArithResultArr((int) result);
+                        arithCal.setResultArr((int) result);
                         System.out.println("결과 : " + (int) result + " (저장 완료!)");
 
                         System.out.println("==================");
 
                         // 결과값 리스트에 값이 존재할 때만 삭제, 조회 메시지 표시
-                        if (!cal.getArithResultArr().isEmpty()) {
+                        if (!arithCal.getResultArr().isEmpty()) {
                             System.out.print("첫 번째로 저장된 결과값을 삭제하시겠습니까? (remove 입력 시 삭제) : ");
                             String selectRemove = sc.next();
                             // 삭제 진행
                             if (selectRemove.equals("remove")) {
                                 //int removeNum = cal.resultArr.get(0);
 
-                                cal.removeResult();
+                                arithCal.removeResult();
                                 System.out.println("삭제 완료!");
                                 //System.out.println("결과값 " + removeNum + " 삭제 완료! (남은 결과값 개수 " + cal.getResultArrSize() + "개)");
                             }
@@ -119,7 +120,7 @@ public class App {
                             // 조회 진행
                             if (selectView.equals("inquiry")) {
                                 System.out.println("==================");
-                                cal.inquiryResults();
+                                arithCal.inquiryResults();
                             }
 
                         } else {
