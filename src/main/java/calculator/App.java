@@ -1,6 +1,5 @@
 package calculator;
 import java.util.*;
-import java.util.regex.Pattern;
 
 public class App {
     public static void main(String[] args) {
@@ -12,7 +11,7 @@ public class App {
         Calculator arithCal = new ArithmeticCalculator(new ArrayList<>());
         Calculator circleCal = new CircleCalculator(new ArrayList<>());
 
-        double result = 0;
+        double result;
 
         Scanner sc = new Scanner(System.in);
 
@@ -27,7 +26,7 @@ public class App {
                 switch (option) {
                     // 원의 넓이 계산기 선택 시
                     case "1" :
-                        int radius = 0;
+                        int radius;
                         System.out.print("원의 반지름을 입력해주세요! : ");
                         // 반지름 값에 음수 또는 int 타입이 아닌 값이 들어온 경우 예외 처리
                         try {

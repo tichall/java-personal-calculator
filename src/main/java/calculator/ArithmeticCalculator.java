@@ -33,8 +33,4 @@ public class ArithmeticCalculator extends Calculator{
         }
         return super.result;
     }
-
-    public void removeResult() {
-        getResultArr().remove(0);
-    }
 }
